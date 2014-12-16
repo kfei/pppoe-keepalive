@@ -1,10 +1,10 @@
 #!/bin/sh
 #
-# Usage: ./cloudflare-ddns-updater.sh <API KEY> <USER MAIL> <HOST NAME>
+# Usage: ./cloudflare-ddns-updater.sh <APIKEY> <USERMAIL> <HOSTNAME(s)>
 
 CFKEY=$1
 CFUSER=$2
-CFHOST=$3
+CFHOSTS="$(sed 's/,\+/ /g' <<<"$3")"
  
 EXTIP=""
 OLDIP=""
@@ -28,7 +28,8 @@ type dig &>/dev/null && {
 
 [ "$EXTIP" = "$OLDIP" ] || {
     echo $EXTIP > /tmp/.extip
-    printf "Updating CloudFlare: $CFHOST -> $EXTIP ... "
-    curl -s https://www.cloudflare.com/api.html?a=DIUP\&hosts="$CFHOST"\&u="$CFUSER"\&tkn="$CFKEY"\&ip="$EXTIP" &> /dev/null
-    [ $? ] && echo "OK!"
+    for h in $CFHOSTS ; do
+        printf "Updating CloudFlare: $h -> $EXTIP ... "
+        curl -s https://www.cloudflare.com/api.html?a=DIUP\&hosts="$h"\&u="$CFUSER"\&tkn="$CFKEY"\&ip="$EXTIP"
+    done
 }

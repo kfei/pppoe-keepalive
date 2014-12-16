@@ -16,5 +16,5 @@ Usually the DDNS records need to update after PPPOE re-connected.
 Automatically update CloudFlare Dynamic DNS records to the current external IP:
 
 ```bash
-./cloudflare-ddns-updater.sh API_KEY USER_MAIL HOST_TO_UPDATE
+./cloudflare-ddns-updater.sh <APIKEY> <USERMAIL> <HOSTNAME(s)>
 ```
