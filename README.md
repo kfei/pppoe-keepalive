@@ -1,12 +1,20 @@
-pppoe-keepalive
-===============
+# pppoe-keepalive
 
-Scripts keep pppoe connection alive.
+Scripts to keep PPPOE connection alive.
 
+## Usage
 
-Usage
-===============
+  - For Linux, put the script into cron job and redirect output to /var/log/pppoe.log or something like that.
+  - For Windows, schedule a job to run the vbs script.
 
-For Linux, put the script into cron job and redirect output to /var/log/pppoe.log or something like this.
+## DDNS Updater
 
-For Windows, schedule a job to run the vbs script.
+Usually the DDNS records need to update after PPPOE re-connected.
+
+### CloudFlare
+
+Automatically update CloudFlare Dynamic DNS records to the current external IP:
+
+```bash
+./cloudflare-ddns-updater.sh API_KEY USER_MAIL HOST_TO_UPDATE
+```
